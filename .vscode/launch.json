@@ -3,14 +3,11 @@
     "configurations": [
         {
             "type": "java",
-            "name": "Launch JavaFX App",
+            "name": "Launch JavaFX MainApp",
             "request": "launch",
             "mainClass": "com.example.MainApp",
-            "vmArgs": "--module-path D:/comp485-pro1/lib --add-modules javafx.controls",
-            "classPaths": [
-                "D:/comp485-pro1/target/classes"
-            ],
-            "cwd": "D:/comp485-pro1"
+            "vmArgs": "--module-path D:/comp485-pro1/lib --add-modules javafx.controls,javafx.fxml",
+            "java.home": "C:/Program Files/Java/jdk-23"
         }
     ]
 }

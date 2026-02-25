@@ -2,17 +2,22 @@ package com.example;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
+import javafx.scene.Parent;
 import javafx.stage.Stage;
+import javafx.fxml.FXMLLoader;
 
 public class MainApp extends Application {
     @Override
     public void start(Stage primaryStage) {
-        Label label = new Label("Hello, JavaFX!");
-        Scene scene = new Scene(label, 400, 200);
-        primaryStage.setTitle("JavaFX Template");
-        primaryStage.setScene(scene);
-        primaryStage.show();
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("/scenes/MainScene.fxml"));
+            Scene scene = new Scene(root, 400, 200);
+            primaryStage.setTitle("JavaFX FXML Template");
+            primaryStage.setScene(scene);
+            primaryStage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public static void main(String[] args) {
