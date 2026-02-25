@@ -1,0 +1,16 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Launch JavaFX App",
+            "request": "launch",
+            "mainClass": "com.example.MainApp",
+            "vmArgs": "--module-path D:/comp485-pro1/lib --add-modules javafx.controls",
+            "classPaths": [
+                "D:/comp485-pro1/target/classes"
+            ],
+            "cwd": "D:/comp485-pro1"
+        }
+    ]
+}
