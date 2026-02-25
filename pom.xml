@@ -41,6 +41,7 @@
                                     <mainClass>com.example.MainApp</mainClass>
                                 </transformer>
                             </transformers>
+                            <finalName>javafx-app-shaded</finalName>
                         </configuration>
                     </execution>
                 </executions>
