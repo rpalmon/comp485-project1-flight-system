@@ -1,6 +1,151 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.control.Label?>
-<VBox xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" spacing="20" alignment="CENTER">
-    <Label text="Welcome to JavaFX FXML UI!" />
-</VBox>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+    <!-- fx:controller="ui.FlightBookingController" removed (Java reference) -->
+
+    <fx:define>
+        <ToggleGroup fx:id="classGroup"/>
+    </fx:define>
+
+    <!-- Top: Search + Options -->
+    <top>
+        <VBox spacing="12">
+            <Label text="International Flight Reservation" style="-fx-font-size: 18px; -fx-font-weight: bold;" />
+
+            <GridPane hgap="12" vgap="10">
+                <columnConstraints>
+                    <ColumnConstraints percentWidth="20"/>
+                    <ColumnConstraints percentWidth="30"/>
+                    <ColumnConstraints percentWidth="20"/>
+                    <ColumnConstraints percentWidth="30"/>
+                </columnConstraints>
+
+                <!-- From / To -->
+                <!-- fx:id="fromCombo" removed (Java reference) -->
+                <Label text="From" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                <ComboBox promptText="Select origin"
+                          GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+                <!-- fx:id="toCombo" removed (Java reference) -->
+                <Label text="To" GridPane.rowIndex="0" GridPane.columnIndex="2"/>
+                <ComboBox promptText="Select destination"
+                          GridPane.rowIndex="0" GridPane.columnIndex="3"/>
+
+                <!-- Dates -->
+                <!-- fx:id="departDate" removed (Java reference) -->
+                <Label text="Depart" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                <DatePicker GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+                <!-- fx:id="returnDate" removed (Java reference) -->
+                <Label text="Return (optional)" GridPane.rowIndex="1" GridPane.columnIndex="2"/>
+                <DatePicker GridPane.rowIndex="1" GridPane.columnIndex="3"/>
+
+                <!-- Passengers -->
+                <!-- fx:id="passengersSpinner" removed (Java reference) -->
+                <Label text="Passengers" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                <Spinner GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+
+                <!-- Seat -->
+                <!-- fx:id="seatCombo" removed (Java reference) -->
+                <Label text="Seat Choice" GridPane.rowIndex="2" GridPane.columnIndex="2"/>
+                <ComboBox promptText="Window / Aisle / Middle"
+                          GridPane.rowIndex="2" GridPane.columnIndex="3"/>
+
+                <!-- Class -->
+                <Label text="Class" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+                <HBox spacing="10" GridPane.rowIndex="3" GridPane.columnIndex="1" GridPane.columnSpan="3">
+                    <!-- fx:id="economyRadio" removed (Java reference) -->
+                    <RadioButton text="Economy" toggleGroup="$classGroup"/>
+                    <!-- fx:id="businessRadio" removed (Java reference) -->
+                    <RadioButton text="Business" toggleGroup="$classGroup"/>
+                    <!-- fx:id="firstRadio" removed (Java reference) -->
+                    <RadioButton text="First" toggleGroup="$classGroup"/>
+                </HBox>
+
+                <!-- Meals -->
+                <Label text="Meals" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+                <FlowPane hgap="10" vgap="6" prefWrapLength="520"
+                          GridPane.rowIndex="4" GridPane.columnIndex="1" GridPane.columnSpan="3">
+                    <!-- fx:id="mealVegetarian" removed (Java reference) -->
+                    <CheckBox text="Vegetarian"/>
+                    <!-- fx:id="mealVegan" removed (Java reference) -->
+                    <CheckBox text="Vegan"/>
+                    <!-- fx:id="Pesketarian" removed (Java reference) -->
+                    <CheckBox text="Pesketarian"/>
+                    <!-- fx:id="mealKosher" removed (Java reference) -->
+                    <CheckBox text="Kosher"/>
+                    <!-- fx:id="mealGlutenFree" removed (Java reference) -->
+                    <CheckBox text="Gluten-free"/>
+                    <!-- fx:id="mealStandard" removed (Java reference) -->
+                    <CheckBox text="Standard"/>
+                </FlowPane>
+
+                <!-- Beverages -->
+                <Label text="Beverages" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
+                <FlowPane hgap="10" vgap="6" prefWrapLength="520"
+                          GridPane.rowIndex="5" GridPane.columnIndex="1" GridPane.columnSpan="3">
+                    <!-- fx:id="bevWater" removed (Java reference) -->
+                    <CheckBox text="Water"/>
+                    <!-- fx:id="bevSoda" removed (Java reference) -->
+                    <CheckBox text="Soda"/>
+                    <!-- fx:id="bevJuice" removed (Java reference) -->
+                    <CheckBox text="Juice"/>
+                    <!-- fx:id="bevCoffee" removed (Java reference) -->
+                    <CheckBox text="Coffee"/>
+                    <!-- fx:id="bevTea" removed (Java reference) -->
+                    <CheckBox text="Tea"/>
+                </FlowPane>
+
+                <!-- Search Button -->
+                <HBox spacing="10" GridPane.rowIndex="6" GridPane.columnIndex="0" GridPane.columnSpan="4">
+                    <!-- fx:id="searchButton" and onAction removed (Java reference) -->
+                    <Button text="Search Flights"/>
+                    <!-- fx:id="statusLabel" removed (Java reference) -->
+                    <Label text="" />
+                </HBox>
+            </GridPane>
+        </VBox>
+    </top>
+
+    <!-- Center: Results table -->
+    <center>
+        <VBox spacing="10">
+            <Label text="Results" style="-fx-font-size: 14px; -fx-font-weight: bold;" />
+
+            <!-- fx:id="resultsTable" removed (Java reference) -->
+            <TableView prefHeight="320">
+                <columns>
+                    <!-- fx:id="colAirline" removed (Java reference) -->
+                    <TableColumn text="Airline" prefWidth="120"/>
+                    <!-- fx:id="colFlightNo" removed (Java reference) -->
+                    <TableColumn text="Flight #" prefWidth="90"/>
+                    <!-- fx:id="colFrom" removed (Java reference) -->
+                    <TableColumn text="From" prefWidth="90"/>
+                    <!-- fx:id="colTo" removed (Java reference) -->
+                    <TableColumn text="To" prefWidth="90"/>
+                    <!-- fx:id="colDepart" removed (Java reference) -->
+                    <TableColumn text="Depart" prefWidth="150"/>
+                    <!-- fx:id="colArrive" removed (Java reference) -->
+                    <TableColumn text="Arrive" prefWidth="150"/>
+                    <!-- fx:id="colPrice" removed (Java reference) -->
+                    <TableColumn text="Price" prefWidth="90"/>
+                    <!-- fx:id="colSeats" removed (Java reference) -->
+                    <TableColumn text="Seats" prefWidth="70"/>
+                </columns>
+            </TableView>
+        </VBox>
+    </center>
+
+    <!-- Bottom: Book -->
+    <bottom>
+        <HBox spacing="10">
+            <!-- fx:id="bookButton" and onAction removed (Java reference) -->
+            <Button text="Book Selected Flight"/>
+            <Label text="Tip: pick a row in the table, then click Book." />
+        </HBox>
+    </bottom>
+
+</BorderPane>

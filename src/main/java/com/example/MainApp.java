@@ -11,7 +11,7 @@ public class MainApp extends Application {
     public void start(Stage primaryStage) {
         try {
             Parent root = FXMLLoader.load(getClass().getResource("/scenes/MainScene.fxml"));
-            Scene scene = new Scene(root, 400, 200);
+            Scene scene = new Scene(root, 650, 600);
             primaryStage.setTitle("JavaFX FXML Template");
             primaryStage.setScene(scene);
             primaryStage.show();
