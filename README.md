@@ -21,7 +21,7 @@ If you want to run the program directly (not using Maven), first copy all JavaFX
 
 Make sure to update the Java path if your JDK is installed elsewhere.
 
-This will launch the JavaFX application with the required runtime components.
+This will launch the JavaFX application with the required runtime component.
 
 ## Project Structure
 
