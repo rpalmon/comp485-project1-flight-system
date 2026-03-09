@@ -112,12 +112,19 @@ public class FlightBookingController {
 
         String sql = """
             SELECT
+                CASE
+                            WHEN f.Flight_Num LIKE 'DL%' THEN 'Delta Airlines'
+                            WHEN f.Flight_Num LIKE 'AA%' THEN 'American Airlines'
+                            WHEN f.Flight_Num LIKE 'UA%' THEN 'United Airlines'
+                            ELSE 'Unknown'
+                        END AS Airline_Name,
                 f.Flight_ID,
                 f.Flight_Num,
                 f.Origin_Code,
                 f.Destination_Code,
                 f.Departure_Time,
                 f.Arrival_Time,
+                100 AS Price,
                 f.Seats_Remaining
             FROM dbo.Flight_Info f
             WHERE f.Origin_Code = ?
@@ -139,19 +146,20 @@ public class FlightBookingController {
                     String flightNum = rs.getString("Flight_Num");
                     String origin = rs.getString("Origin_Code");
                     String dest = rs.getString("Destination_Code");
+                    String airline = rs.getString("Airline_Name");
                     String depart = String.valueOf(rs.getTimestamp("Departure_Time"));
                     String arrive = String.valueOf(rs.getTimestamp("Arrival_Time"));
                     int seats = rs.getInt("Seats_Remaining");
 
                     data.add(new FlightRow(
                             flightId,
-                            "Unknown",
+                            airline,
                             flightNum,
                             origin,
                             dest,
-                            depart,
-                            arrive,
-                            0.0,
+                            depart,      // use converted value
+                            arrive,      // use converted value
+                            100.0,       // or rs.getDouble("Price") if you selected it
                             seats
                     ));
                     count++;
