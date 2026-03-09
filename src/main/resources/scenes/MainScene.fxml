@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/17"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="ui.FlightBookingController">
+
+    <fx:define>
+        <ToggleGroup fx:id="classGroup"/>
+    </fx:define>
+
+    <top>
+        <VBox spacing="12">
+            <Label text="International Flight Reservation"
+                   style="-fx-font-size: 18px; -fx-font-weight: bold;" />
+
+            <GridPane hgap="12" vgap="10">
+                <columnConstraints>
+                    <ColumnConstraints percentWidth="20"/>
+                    <ColumnConstraints percentWidth="30"/>
+                    <ColumnConstraints percentWidth="20"/>
+                    <ColumnConstraints percentWidth="30"/>
+                </columnConstraints>
+
+                <Label text="From" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                <ComboBox fx:id="fromCombo" promptText="Select origin"
+                          GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+                <Label text="To" GridPane.rowIndex="0" GridPane.columnIndex="2"/>
+                <ComboBox fx:id="toCombo" promptText="Select destination"
+                          GridPane.rowIndex="0" GridPane.columnIndex="3"/>
+
+                <Label text="Depart" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                <DatePicker fx:id="departDate" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+                <Label text="Return (optional)" GridPane.rowIndex="1" GridPane.columnIndex="2"/>
+                <DatePicker fx:id="returnDate" GridPane.rowIndex="1" GridPane.columnIndex="3"/>
+
+                <Label text="Passengers" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                <Spinner fx:id="passengersSpinner" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+
+                <Label text="Seat Choice" GridPane.rowIndex="2" GridPane.columnIndex="2"/>
+                <ComboBox fx:id="seatCombo" promptText="Window / Aisle / Middle"
+                          GridPane.rowIndex="2" GridPane.columnIndex="3"/>
+
+                <Label text="Class" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+                <HBox spacing="10" GridPane.rowIndex="3" GridPane.columnIndex="1" GridPane.columnSpan="3">
+                    <RadioButton fx:id="economyRadio" text="Economy" toggleGroup="$classGroup"/>
+                    <RadioButton fx:id="businessRadio" text="Business" toggleGroup="$classGroup"/>
+                    <RadioButton fx:id="firstRadio" text="First" toggleGroup="$classGroup"/>
+                </HBox>
+
+                <Label text="Meals" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+                <FlowPane hgap="10" vgap="6" prefWrapLength="520"
+                          GridPane.rowIndex="4" GridPane.columnIndex="1" GridPane.columnSpan="3">
+                    <CheckBox fx:id="mealVegetarian" text="Vegetarian"/>
+                    <CheckBox fx:id="mealVegan" text="Vegan"/>
+                    <CheckBox fx:id="Pesketarian" text="Pesketarian"/>
+                    <CheckBox fx:id="mealKosher" text="Kosher"/>
+                    <CheckBox fx:id="mealGlutenFree" text="Gluten-free"/>
+                    <CheckBox fx:id="mealStandard" text="Standard"/>
+                </FlowPane>
+
+                <Label text="Beverages" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
+                <FlowPane hgap="10" vgap="6" prefWrapLength="520"
+                          GridPane.rowIndex="5" GridPane.columnIndex="1" GridPane.columnSpan="3">
+                    <CheckBox fx:id="bevWater" text="Water"/>
+                    <CheckBox fx:id="bevSoda" text="Soda"/>
+                    <CheckBox fx:id="bevJuice" text="Juice"/>
+                    <CheckBox fx:id="bevCoffee" text="Coffee"/>
+                    <CheckBox fx:id="bevTea" text="Tea"/>
+                </FlowPane>
+            </GridPane>
+        </VBox>
+    </top>
+
+    <center>
+        <VBox spacing="10">
+            <Label text="Results" style="-fx-font-size: 14px; -fx-font-weight: bold;" />
+            <TableView fx:id="resultsTable" prefHeight="320">
+                <columns>
+                    <TableColumn fx:id="colAirline" text="Airline" prefWidth="120"/>
+                    <TableColumn fx:id="colFlightNo" text="Flight #" prefWidth="90"/>
+                    <TableColumn fx:id="colFrom" text="From" prefWidth="90"/>
+                    <TableColumn fx:id="colTo" text="To" prefWidth="90"/>
+                    <TableColumn fx:id="colDepart" text="Depart" prefWidth="150"/>
+                    <TableColumn fx:id="colArrive" text="Arrive" prefWidth="150"/>
+                    <TableColumn fx:id="colPrice" text="Price" prefWidth="90"/>
+                    <TableColumn fx:id="colSeats" text="Seats" prefWidth="70"/>
+                </columns>
+            </TableView>
+        </VBox>
+    </center>
+
+    <bottom>
+        <HBox spacing="10" style="-fx-padding: 8;">
+            <Button text="Search Flights" onAction="#handleSearch"/>
+            <Button text="Book Selected Flight" onAction="#handleBook"/>
+            <!-- ONLY ONE statusLabel in the whole file -->
+            <Label fx:id="statusLabel" text="Tip: pick a row, then click Book."/>
+        </HBox>
+    </bottom>
+
+</BorderPane>
