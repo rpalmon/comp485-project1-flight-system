@@ -6,22 +6,34 @@ This is a basic JavaFX template project using Maven. It includes a simple applic
 
 ## How to Run
 
-1. Make sure you have JDK 17 or newer installed.
-2. In this folder, run:
+Prerequisites
+- JDK 17 or newer (project uses Java 21 in `pom.xml`).
 
-    mvn javafx:run
+Options
 
-This will build and launch the JavaFX application.
+- Run with the bundled launcher (Windows):
 
-## How to Run with Java.exe
+```powershell
+.\run-javafx.bat
+```
 
-If you want to run the program directly (not using Maven), first copy all JavaFX 17.0.2 jars to the `lib` folder (already done). Then use this command:
+- Run directly with `java` (explicit module-path):
 
-    & "C:\Program Files\Java\jdk-23\bin\java.exe" --module-path "D:\comp485-pro1\lib" --add-modules javafx.controls -cp "D:\comp485-pro1\target\classes" com.example.MainApp
+```powershell
+& 'C:\Program Files\Java\jdk-21\bin\java.exe' --module-path 'E:\comp485-project1-flight-system\lib' --add-modules=javafx.controls,javafx.fxml -cp 'target\classes;lib/*' com.example.MainApp
+```
 
-Make sure to update the Java path if your JDK is installed elsewhere.
+- Run with Maven (requires Maven installed):
 
-This will launch the JavaFX application with the required runtime components.
+```bash
+mvn clean javafx:run -DskipTests
+```
+
+- Run from VS Code: open the Run view, select `Launch JavaFX MainApp`, then Start Debugging (F5). The workspace launch config points `vmArgs` at the project's `lib` folder.
+
+Notes
+- The `lib/` folder already contains JavaFX 17 jars; keep `--module-path` pointed to that folder when running without Maven.
+- If you don't have Maven installed, consider adding the Maven Wrapper (`mvnw`) or use the `run-javafx.bat` launcher.
 
 ## Project Structure
 

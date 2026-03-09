@@ -1,9 +1,6 @@
 @echo off
-REM Run the JavaFX app using the local lib folder for JavaFX modules
-setlocal enabledelayedexpansion
-@echo off
-REM Run the JavaFX app using the local lib folder for JavaFX modules
-setlocal enabledelayedexpansion
+REM Robust launcher: switch to script folder, use lib for module-path and lib\* on classpath
+pushd "%~dp0" >nul || (echo Failed to change directory to script location & exit /b 1)
 
 REM Use JAVA_HOME if set, otherwise expect java on PATH
 if defined JAVA_HOME (
@@ -12,15 +9,16 @@ if defined JAVA_HOME (
 	set "JAVACMD=java"
 )
 
-REM Project root (this script's folder)
-set "PRJ=%~dp0"
+REM Module path (relative to project root)
+set "MODULEPATH=lib"
 
-REM Use lib folder in project for JavaFX jars
-set "LIB=%PRJ%lib"
+REM Classpath: compiled classes and all jars in lib
+set "CP=target\classes;lib\*"
 
-REM Classpath: compiled classes
-set "CLASSPATH=%PRJ%target\classes"
+echo Running Java at: %JAVACMD%
+echo Module path: %MODULEPATH%
+echo Classpath: %CP%
 
-"%JAVACMD%" --module-path "%LIB%" --add-modules=javafx.controls,javafx.fxml -cp "%CLASSPATH%" com.example.MainApp
+"%JAVACMD%" --module-path "%MODULEPATH%" --add-modules=javafx.controls,javafx.fxml -cp "%CP%" com.example.MainApp
 
-endlocal
+popd >nul
