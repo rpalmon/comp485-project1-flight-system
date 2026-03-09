@@ -25,6 +25,7 @@ Options
 
 - Run with Maven (requires Maven installed):
 
+<<<<<<< HEAD
 ```bash
 mvn clean javafx:run -DskipTests
 ```
@@ -34,6 +35,9 @@ mvn clean javafx:run -DskipTests
 Notes
 - The `lib/` folder already contains JavaFX 17 jars; keep `--module-path` pointed to that folder when running without Maven.
 - If you don't have Maven installed, consider adding the Maven Wrapper (`mvnw`) or use the `run-javafx.bat` launcher.
+=======
+This will launch the JavaFX application with the required runtime component.
+>>>>>>> b1a3b7c5a3d4568cd7dd68aaaa5235535c9509b5
 
 ## Project Structure
 
