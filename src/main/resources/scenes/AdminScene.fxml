@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.Spinner?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.example.AdminController"
+            prefWidth="1100" prefHeight="760">
+    <top>
+        <VBox spacing="10" BorderPane.alignment="CENTER">
+            <padding>
+                <Insets top="18" right="18" bottom="12" left="18" />
+            </padding>
+
+            <Label text="Admin Console" style="-fx-font-size: 20px; -fx-font-weight: bold;" />
+            <Label text="Manage Supabase tables through the REST API. Connection values are loaded from .env and can be adjusted at runtime for this session." wrapText="true" />
+
+            <GridPane hgap="12" vgap="10">
+                <columnConstraints>
+                    <javafx.scene.layout.ColumnConstraints percentWidth="16" />
+                    <javafx.scene.layout.ColumnConstraints percentWidth="34" hgrow="ALWAYS" />
+                    <javafx.scene.layout.ColumnConstraints percentWidth="16" />
+                    <javafx.scene.layout.ColumnConstraints percentWidth="34" hgrow="ALWAYS" />
+                </columnConstraints>
+
+                <Label text="Supabase URL" GridPane.rowIndex="0" GridPane.columnIndex="0" />
+                <TextField fx:id="supabaseUrlField" promptText="https://your-project.supabase.co"
+                           GridPane.rowIndex="0" GridPane.columnIndex="1" />
+
+                <Label text="Anon Key" GridPane.rowIndex="0" GridPane.columnIndex="2" />
+                <TextField fx:id="anonKeyField" promptText="sb_publishable_... or legacy anon JWT"
+                           GridPane.rowIndex="0" GridPane.columnIndex="3" />
+
+                <Label text="Table" GridPane.rowIndex="1" GridPane.columnIndex="0" />
+                <ComboBox fx:id="tableCombo" prefWidth="240"
+                          GridPane.rowIndex="1" GridPane.columnIndex="1" />
+
+                <Label text="Columns" GridPane.rowIndex="1" GridPane.columnIndex="2" />
+                <TextField fx:id="selectColumnsField" text="*" GridPane.rowIndex="1" GridPane.columnIndex="3" />
+
+                <Label text="Order By" GridPane.rowIndex="2" GridPane.columnIndex="0" />
+                <TextField fx:id="orderByField" promptText="created_at" GridPane.rowIndex="2" GridPane.columnIndex="1" />
+
+                <Label text="Direction" GridPane.rowIndex="2" GridPane.columnIndex="2" />
+                <ComboBox fx:id="orderDirectionCombo" prefWidth="160"
+                          GridPane.rowIndex="2" GridPane.columnIndex="3" />
+
+                <Label text="Row Limit" GridPane.rowIndex="3" GridPane.columnIndex="0" />
+                <Spinner fx:id="limitSpinner" GridPane.rowIndex="3" GridPane.columnIndex="1" />
+
+                <HBox spacing="10" GridPane.rowIndex="3" GridPane.columnIndex="3">
+                    <Button fx:id="reloadEnvButton" text="Reload .env" onAction="#handleReloadEnv" />
+                    <Button fx:id="applyTemplateButton" text="Load Template" onAction="#handleApplyTemplate" />
+                    <Button fx:id="loadRowsButton" text="Load Rows" onAction="#handleLoadRows" />
+                </HBox>
+
+                <Label fx:id="templateInfoLabel" text="Pick a table to load insert and update templates."
+                       wrapText="true" GridPane.rowIndex="4" GridPane.columnIndex="0" GridPane.columnSpan="4" />
+            </GridPane>
+        </VBox>
+    </top>
+
+    <center>
+        <HBox spacing="16">
+            <padding>
+                <Insets top="0" right="18" bottom="18" left="18" />
+            </padding>
+
+            <ScrollPane fitToWidth="true" HBox.hgrow="ALWAYS">
+                <content>
+                    <VBox spacing="16" fillWidth="true">
+                        <VBox spacing="10">
+                            <Label text="Assisted Flight Builder" style="-fx-font-size: 14px; -fx-font-weight: bold;" />
+                            <Label text="Select existing airlines, airports, and aircraft models from Supabase. You can also type into the boxes. If no match exists, the builder can prompt you to create the missing record with guided fields." wrapText="true" />
+                            <GridPane hgap="12" vgap="10">
+                                <columnConstraints>
+                                    <javafx.scene.layout.ColumnConstraints percentWidth="18" />
+                                    <javafx.scene.layout.ColumnConstraints percentWidth="32" hgrow="ALWAYS" />
+                                    <javafx.scene.layout.ColumnConstraints percentWidth="18" />
+                                    <javafx.scene.layout.ColumnConstraints percentWidth="32" hgrow="ALWAYS" />
+                                </columnConstraints>
+
+                                <Label text="Airline" GridPane.rowIndex="0" GridPane.columnIndex="0" />
+                                <ComboBox fx:id="flightAirlineCombo" prefWidth="260"
+                                          GridPane.rowIndex="0" GridPane.columnIndex="1" />
+
+                                <Label text="Aircraft Model" GridPane.rowIndex="0" GridPane.columnIndex="2" />
+                                <ComboBox fx:id="aircraftModelCombo" prefWidth="260"
+                                          GridPane.rowIndex="0" GridPane.columnIndex="3" />
+
+                                <Label text="Origin Airport" GridPane.rowIndex="1" GridPane.columnIndex="0" />
+                                <ComboBox fx:id="originAirportCombo" prefWidth="260"
+                                          GridPane.rowIndex="1" GridPane.columnIndex="1" />
+
+                                <Label text="Destination Airport" GridPane.rowIndex="1" GridPane.columnIndex="2" />
+                                <ComboBox fx:id="destinationAirportCombo" prefWidth="260"
+                                          GridPane.rowIndex="1" GridPane.columnIndex="3" />
+
+                                <Label text="Flight Number" GridPane.rowIndex="2" GridPane.columnIndex="0" />
+                                <TextField fx:id="flightNumberField" promptText="OA101"
+                                           GridPane.rowIndex="2" GridPane.columnIndex="1" />
+
+                                <Label text="Base Price" GridPane.rowIndex="2" GridPane.columnIndex="2" />
+                                <TextField fx:id="basePriceField" promptText="749.99"
+                                           GridPane.rowIndex="2" GridPane.columnIndex="3" />
+
+                                <Label text="Depart Date" GridPane.rowIndex="3" GridPane.columnIndex="0" />
+                                <DatePicker fx:id="departureDatePicker"
+                                            GridPane.rowIndex="3" GridPane.columnIndex="1" />
+
+                                <Label text="Depart Time" GridPane.rowIndex="3" GridPane.columnIndex="2" />
+                                <TextField fx:id="departureTimeField" promptText="08:00"
+                                           GridPane.rowIndex="3" GridPane.columnIndex="3" />
+
+                                <Label text="Arrive Date" GridPane.rowIndex="4" GridPane.columnIndex="0" />
+                                <DatePicker fx:id="arrivalDatePicker"
+                                            GridPane.rowIndex="4" GridPane.columnIndex="1" />
+
+                                <Label text="Arrive Time" GridPane.rowIndex="4" GridPane.columnIndex="2" />
+                                <TextField fx:id="arrivalTimeField" promptText="19:45"
+                                           GridPane.rowIndex="4" GridPane.columnIndex="3" />
+
+                                <Label text="Total Seats" GridPane.rowIndex="5" GridPane.columnIndex="0" />
+                                <Spinner fx:id="totalSeatsSpinner"
+                                         GridPane.rowIndex="5" GridPane.columnIndex="1" />
+
+                                <Label text="Available Seats" GridPane.rowIndex="5" GridPane.columnIndex="2" />
+                                <Spinner fx:id="availableSeatsSpinner"
+                                         GridPane.rowIndex="5" GridPane.columnIndex="3" />
+                            </GridPane>
+
+                            <HBox spacing="14">
+                                <CheckBox fx:id="createClassesCheckBox" text="Create class rows" selected="true" />
+                                <CheckBox fx:id="generateSeatMapCheckBox" text="Generate seat map from aircraft model" selected="true" />
+                            </HBox>
+
+                            <HBox spacing="10">
+                                <Button fx:id="refreshBuilderDataButton" text="Refresh Lookups" onAction="#handleReloadBuilderReferences" />
+                                <Button fx:id="newAirlineButton" text="New Airline" onAction="#handleCreateAirline" />
+                                <Button fx:id="newOriginAirportButton" text="New Origin Airport" onAction="#handleCreateOriginAirport" />
+                                <Button fx:id="newDestinationAirportButton" text="New Destination Airport" onAction="#handleCreateDestinationAirport" />
+                                <Button fx:id="newAircraftModelButton" text="New Aircraft Model" onAction="#handleCreateAircraftModel" />
+                                <Button fx:id="createFlightButton" text="Create Flight" onAction="#handleCreateFlight" />
+                            </HBox>
+
+                            <Label fx:id="builderInfoLabel" text="Flight builder lookups will load from Supabase when this window opens."
+                                   wrapText="true" />
+                        </VBox>
+
+                        <Separator />
+
+                        <VBox spacing="10">
+                            <Label text="Read Filter" style="-fx-font-size: 14px; -fx-font-weight: bold;" />
+                            <GridPane hgap="12" vgap="10">
+                                <columnConstraints>
+                                    <javafx.scene.layout.ColumnConstraints percentWidth="30" />
+                                    <javafx.scene.layout.ColumnConstraints percentWidth="30" />
+                                    <javafx.scene.layout.ColumnConstraints percentWidth="40" hgrow="ALWAYS" />
+                                </columnConstraints>
+
+                                <TextField fx:id="filterColumnField" promptText="Filter column"
+                                           GridPane.rowIndex="0" GridPane.columnIndex="0" />
+                                <ComboBox fx:id="filterOperatorCombo"
+                                          GridPane.rowIndex="0" GridPane.columnIndex="1" />
+                                <TextField fx:id="filterValueField" promptText="Filter value"
+                                           GridPane.rowIndex="0" GridPane.columnIndex="2" />
+                            </GridPane>
+                            <HBox spacing="10">
+                                <Button fx:id="clearFilterButton" text="Clear Filter" onAction="#handleClearFilter" />
+                            </HBox>
+                        </VBox>
+
+                        <Separator />
+
+                        <VBox spacing="10">
+                            <Label text="Insert Row" style="-fx-font-size: 14px; -fx-font-weight: bold;" />
+                            <Label text="Enter a JSON object matching the selected table's schema." wrapText="true" />
+                            <TextArea fx:id="insertPayloadArea" prefRowCount="10" wrapText="true" />
+                            <HBox spacing="10">
+                                <Button fx:id="insertButton" text="Insert" onAction="#handleInsertRow" />
+                            </HBox>
+                        </VBox>
+
+                        <Separator />
+
+                        <VBox spacing="10">
+                            <Label text="Update Or Delete" style="-fx-font-size: 14px; -fx-font-weight: bold;" />
+                            <GridPane hgap="12" vgap="10">
+                                <columnConstraints>
+                                    <javafx.scene.layout.ColumnConstraints percentWidth="30" />
+                                    <javafx.scene.layout.ColumnConstraints percentWidth="70" hgrow="ALWAYS" />
+                                </columnConstraints>
+
+                                <Label text="Match Column" GridPane.rowIndex="0" GridPane.columnIndex="0" />
+                                <TextField fx:id="matchColumnField" promptText="id"
+                                           GridPane.rowIndex="0" GridPane.columnIndex="1" />
+
+                                <Label text="Match Value" GridPane.rowIndex="1" GridPane.columnIndex="0" />
+                                <TextField fx:id="matchValueField" promptText="1"
+                                           GridPane.rowIndex="1" GridPane.columnIndex="1" />
+                            </GridPane>
+
+                            <Label text="Update JSON" />
+                            <TextArea fx:id="updatePayloadArea" prefRowCount="10" wrapText="true" />
+                            <HBox spacing="10">
+                                <Button fx:id="updateButton" text="Update Matching Rows" onAction="#handleUpdateRows" />
+                                <Button fx:id="deleteButton" text="Delete Matching Rows" onAction="#handleDeleteRows" />
+                            </HBox>
+                        </VBox>
+                    </VBox>
+                </content>
+            </ScrollPane>
+
+            <VBox spacing="10" prefWidth="420" HBox.hgrow="ALWAYS">
+                <Label text="Raw Response" style="-fx-font-size: 14px; -fx-font-weight: bold;" />
+                <Label text="Successful requests and API errors are shown here." wrapText="true" />
+                <TextArea fx:id="responseArea" editable="false" wrapText="true" VBox.vgrow="ALWAYS" />
+            </VBox>
+        </HBox>
+    </center>
+
+    <bottom>
+        <HBox spacing="10" BorderPane.alignment="CENTER_LEFT">
+            <padding>
+                <Insets top="0" right="18" bottom="18" left="18" />
+            </padding>
+            <Label fx:id="statusLabel" text="Ready." wrapText="true" />
+        </HBox>
+    </bottom>
+</BorderPane>

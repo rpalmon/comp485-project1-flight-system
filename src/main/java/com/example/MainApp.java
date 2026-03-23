@@ -14,7 +14,7 @@ public class MainApp extends Application {
             Parent root = FXMLLoader.load(getClass().getResource("/scenes/MainScene.fxml"));
             System.out.println("MainApp.start: FXML loaded");
             Scene scene = new Scene(root, 650, 600);
-            primaryStage.setTitle("JavaFX FXML Template");
+            primaryStage.setTitle("Flight Reservation System");
             primaryStage.setScene(scene);
             primaryStage.show();
             System.out.println("MainApp.start: shown");
