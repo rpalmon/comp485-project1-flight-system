@@ -8,6 +8,7 @@ import java.util.Map;
 
 public final class EnvConfig {
     private static final Path DEFAULT_ENV_PATH = Path.of(".env");
+    private static final Path LEGACY_ENV_PATH = Path.of("env");
 
     private final Path sourcePath;
     private final Map<String, String> values;
@@ -18,6 +19,14 @@ public final class EnvConfig {
     }
 
     public static EnvConfig loadDefault() {
+        if (Files.exists(DEFAULT_ENV_PATH)) {
+            return load(DEFAULT_ENV_PATH);
+        }
+
+        if (Files.exists(LEGACY_ENV_PATH)) {
+            return load(LEGACY_ENV_PATH);
+        }
+
         return load(DEFAULT_ENV_PATH);
     }
 
