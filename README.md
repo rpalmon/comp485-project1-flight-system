@@ -81,10 +81,6 @@ Because your Supabase dashboard showed these tables as `UNRESTRICTED`, the JavaF
 The templates are based on your current Supabase schema, including UUID foreign key placeholders and JSON/array examples for tables like `payments`, `change_history`, and `passengers`.
 The guided flight builder sits above the raw CRUD tools, so normal flight setup can stay form-based while the generic JSON editor is still available for edge cases.
 
-## Static Admin Page
-
-Open `web/admin.html` in a browser if you still want a simple standalone CRUD page.
-
 ## Demo Flights Table
 
 If you want a concrete table for the admin page, run the SQL in `supabase/flights_setup.sql` inside the Supabase SQL Editor.
