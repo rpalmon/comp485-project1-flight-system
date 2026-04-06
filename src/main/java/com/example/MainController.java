@@ -1,5 +1,13 @@
 package com.example;
 
+import java.io.IOException;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import java.util.concurrent.Callable;
+import java.util.function.Consumer;
+
 import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -26,14 +34,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-
-import java.io.IOException;
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.concurrent.Callable;
-import java.util.function.Consumer;
 
 public class MainController {
     @FXML
@@ -321,7 +321,7 @@ public class MainController {
         String expectedPassword = envConfig.get("ADMIN_PASSWORD");
 
         if (expectedUsername.isBlank() || expectedPassword.isBlank()) {
-            setStatus("Set ADMIN_USERNAME and ADMIN_PASSWORD in .env before opening Admin.", true);
+            setStatus("Set ADMIN_USERNAME and ADMIN_PASSWORD in env before opening Admin.", true);
             return;
         }
 
@@ -428,7 +428,7 @@ public class MainController {
     private Optional<LoginAttempt> showLoginDialog() {
         Dialog<LoginAttempt> dialog = new Dialog<>();
         dialog.setTitle("Admin Login");
-        dialog.setHeaderText("Enter the admin credentials from .env.");
+        dialog.setHeaderText("Enter the admin credentials from env.");
 
         ButtonType loginButtonType = new ButtonType("Login", ButtonBar.ButtonData.OK_DONE);
         dialog.getDialogPane().getButtonTypes().addAll(loginButtonType, ButtonType.CANCEL);
