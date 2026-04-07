@@ -15,6 +15,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.Dialog;
+import javafx.scene.control.TextArea;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
@@ -50,22 +52,48 @@ public class MainApp extends Application {
             return true;
         }
 
-        Alert alert = new Alert(Alert.AlertType.WARNING);
-        initOwnerIfReady(alert, ownerStage);
-        alert.setTitle("Configuration file missing");
-        alert.setHeaderText("No env file was found in the project root.");
-        alert.setContentText("Choose a file to upload. The app will save it as env in the root folder.");
+        Dialog<ButtonType> dialog = new Dialog<>();
+        initOwnerIfReady(dialog, ownerStage);
+        dialog.setTitle("Configuration file missing");
+        dialog.setHeaderText("No env file was found in the project root.");
 
-        ButtonType uploadButton = new ButtonType("Upload", ButtonBar.ButtonData.OK_DONE);
-        ButtonType exitButton = new ButtonType("Exit", ButtonBar.ButtonData.CANCEL_CLOSE);
-        alert.getButtonTypes().setAll(uploadButton, exitButton);
+        TextArea textArea = new TextArea();
+        textArea.setPromptText("Paste env file contents here, or leave blank to upload an existing file.");
+        textArea.setWrapText(true);
+        textArea.setPrefRowCount(12);
+        dialog.getDialogPane().setContent(textArea);
 
-        Optional<ButtonType> choice = alert.showAndWait();
-        if (choice.isEmpty() || choice.get() != uploadButton) {
+        ButtonType uploadButton = new ButtonType("Upload file", ButtonBar.ButtonData.LEFT);
+        ButtonType createButton = new ButtonType("Create .env", ButtonBar.ButtonData.OK_DONE);
+        ButtonType cancelButton = new ButtonType("Exit", ButtonBar.ButtonData.CANCEL_CLOSE);
+        dialog.getDialogPane().getButtonTypes().setAll(uploadButton, createButton, cancelButton);
+
+        var createButtonNode = dialog.getDialogPane().lookupButton(createButton);
+        createButtonNode.setDisable(true);
+        textArea.textProperty().addListener((observable, oldValue, newValue) -> createButtonNode.setDisable(newValue == null || newValue.trim().isEmpty()));
+
+        dialog.setResultConverter(button -> button);
+        Optional<ButtonType> result = dialog.showAndWait();
+        if (result.isEmpty() || result.get() == cancelButton) {
             Platform.exit();
             return false;
         }
 
+        if (result.get() == uploadButton) {
+            return showEnvFileUploadDialog(ownerStage);
+        }
+
+        String envText = textArea.getText();
+        if (envText == null || envText.trim().isEmpty()) {
+            Platform.exit();
+            return false;
+        }
+
+        Files.writeString(DOT_ENV_PATH, envText);
+        return true;
+    }
+
+    private boolean showEnvFileUploadDialog(Stage ownerStage) throws IOException {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Select env file");
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Config files", "*.env", "env", "*.*"));
@@ -76,7 +104,7 @@ public class MainApp extends Application {
             return false;
         }
 
-        Files.copy(selectedFile.toPath(), ENV_PATH, StandardCopyOption.REPLACE_EXISTING);
+        Files.copy(selectedFile.toPath(), DOT_ENV_PATH, StandardCopyOption.REPLACE_EXISTING);
         return true;
     }
 
@@ -89,9 +117,9 @@ public class MainApp extends Application {
         alert.showAndWait();
     }
 
-    private void initOwnerIfReady(Alert alert, Stage ownerStage) {
+    private void initOwnerIfReady(Dialog<?> dialog, Stage ownerStage) {
         if (ownerStage != null && ownerStage.getScene() != null) {
-            alert.initOwner(ownerStage);
+            dialog.initOwner(ownerStage);
         }
     }
 
